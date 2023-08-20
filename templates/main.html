@@ -13,8 +13,10 @@
 <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Register</button>
 
 <div id="id01" class="modal">
+
+      
   
-  <form class="modal-content animate" action="/action_page.php" method="post">
+  <form class="modal-content animate" action="/login_validation" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       
@@ -32,6 +34,13 @@
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
+
+      {% for message in get_flashed_messages() %}
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+          {{ message }}.
+        </div>
+      {% endfor %} 
     </div>
 
     <div class="container" style="background-color:#f1f1f1">
@@ -42,8 +51,15 @@
 </div>
 
 <div id="id02" class="modal">
+
+    {% for message in get_flashed_messages() %}
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+          {{ message }}.
+        </div>
+    {% endfor %} 
   
-    <form class="modal-content animate" action="/action_page.php" method="post">
+    <form class="modal-content animate" action="/add_user" method="post">
       <div class="imgcontainer">
         <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
         
@@ -53,14 +69,14 @@
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
         <label for="name"><b>Name</b></label>
-        <input type="text" placeholder="Enter Your Name" name="name" required>
+        <input type="text" placeholder="Enter Your Name" name="rname" required>
         <label for="uname"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+        <input type="email" placeholder="Enter Email" name="remail" required>
 
         <label for="uname"><b> Create Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
+        <input type="text" placeholder="Enter Username" name="runame" required>
         <label for="psw"><b>Create Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" placeholder="Enter Password" name="rpsw" required>
         <label for="psw-confirm"><b>Confirm Password</b></label>
         <input type="password" placeholder="Confirm Password" name="psw-confirm" id="psw-confirm" required>
 
@@ -70,9 +86,7 @@
       </div>
   
       <div class="container" style="background-color:#f1f1f1">
-        <p>Already have an account? <a href="#">Login</a>.</p>
-       
-        <button data-dismiss="id02" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+        <p>Already have an account? <a href="/login">Login</a>.</p>
       </div>
     </form>
   </div>

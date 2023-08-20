@@ -44,7 +44,7 @@ def login_validation():
         return redirect ('/dashboard')
     else:
         flash("Invalid credentials. Check your account username and password")
-        return redirect('/login')
+        return redirect ('/login')
         
 
 @app.route('/add_user', methods =['POST'])
