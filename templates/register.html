@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +7,12 @@
 <title>Register</title>
 </head>
 <body>
+      {% for message in get_flashed_messages() %}
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+          {{ message }}.
+        </div>
+      {% endfor %} 
   
     <form action="/add_user" method="post">
       <div class="imgcontainer">  
@@ -27,9 +34,10 @@
 
         <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
         <button type="submit">Register</button>
-        </div>
-          <strong>{{error}}</strong> 
-        </div>
+
+        
+          
+        
       </div>
   
       <div class="container" style="background-color:#f1f1f1">

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session,get_flashed
 import mysql.connector
 import os
 
+
 app=Flask(__name__)
 app.secret_key=os.urandom(24)
 
@@ -42,12 +43,9 @@ def login_validation():
         session['user_id']= users[0][0]
         return redirect ('/dashboard')
     else:
-        error = 'Wrong username and password'
-        return render_template('login.html', error=error)
-    
+        flash("Invalid credentials. Check your account username and password")
+        return redirect('/login')
         
-    
-
 
 @app.route('/add_user', methods =['POST'])
 def add_user():
@@ -59,14 +57,15 @@ def add_user():
     cursor.execute("""Select * from users where username LIKE '{}' OR email LIKE '{}'""".format(username, email))
     users=cursor.fetchall()
     if len(users)>0:
-        error= 'username or email already exists'
-        return render_template("register.html", error = error) 
+        flash("That username or email is already used, please choose another")
+        return redirect('/register')
     else:
         cursor.execute("""INSERT INTO users (name, email, username, password) 
                             VALUES 
                             ('{}','{}','{}','{}') """.format(name, email, username, password))
         conn.commit()
-        return "User Registered Successfully"
+        flash("User Registered Successfully")
+        return redirect ('/dashboard')
        
 
 @app.route('/logout')
