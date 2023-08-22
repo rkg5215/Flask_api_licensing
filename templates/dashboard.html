@@ -1,16 +1,37 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-	<title>
-		Dashboard
-	</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="static/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
-
 <body>
-	Hello You are logged in!!</br>
+    <div class="main">
+      
+        <!-- Dashboard -->
+            <div class="container">	
+				{% for message in get_flashed_messages() %}
+                <div class="alert info">
+                  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                  {{ message }}.
+                </div>
+              {% endfor %} 
+			  <p>Welcome {{user}} !! You are logged in.</p>
+			  <a href="/logout">Logout</a>  
+            </div>
+        
+    </div>
 
-	<a href="/logout">Logout</a>
+    <!-- JS -->
+    
 </body>
-
 </html>
+
+
