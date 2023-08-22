@@ -17,17 +17,24 @@ def home():
 
 @app.route('/login')
 def login():
-    return render_template("login.html")
+    if session.get('user_id'):
+        return redirect("/dashboard") 
+    else:
+        return render_template("login.html")
+    
 
 @app.route('/register')
 def register():
-    return render_template("register.html")
+    if session.get('user_id'):
+        return redirect("/dashboard") 
+    else:
+        return render_template("register.html")
 
 @app.route('/dashboard')
 def dashboard():
     if session.get('user_id'):
-        return render_template("dashboard.html")
-    
+        user_name=session.get('user_id')
+        return render_template("dashboard.html", user=user_name) 
     else:
         return redirect('/login')
     
@@ -40,7 +47,8 @@ def login_validation():
     cursor.execute("""Select * from users where username LIKE '{}' AND password LIKE '{}'""".format(username, password))
     users=cursor.fetchall()
     if len(users)>0:
-        session['user_id']= users[0][0]
+        session['user_id']= users[0][1]
+        flash("Login Successfull")
         return redirect ('/dashboard')
     else:
         flash("Invalid credentials. Check your account username and password")
@@ -53,7 +61,6 @@ def add_user():
     email=request.form.get('remail')
     username=request.form.get('runame')
     password=request.form.get('rpsw')
-    
     cursor.execute("""Select * from users where username LIKE '{}' OR email LIKE '{}'""".format(username, email))
     users=cursor.fetchall()
     if len(users)>0:
@@ -65,7 +72,7 @@ def add_user():
                             ('{}','{}','{}','{}') """.format(name, email, username, password))
         conn.commit()
         flash("User Registered Successfully")
-        return redirect ('/dashboard')
+        return redirect ('/login')
        
 
 @app.route('/logout')
